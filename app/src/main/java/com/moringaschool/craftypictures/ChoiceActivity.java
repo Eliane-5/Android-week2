@@ -50,6 +50,7 @@ public class ChoiceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ChoiceActivity.this, HungryActivity.class);
                 startActivity(intent);
+                Toast.makeText(ChoiceActivity.this, "prepare to have a treat!", Toast.LENGTH_LONG).show();
             }
         });
     }
