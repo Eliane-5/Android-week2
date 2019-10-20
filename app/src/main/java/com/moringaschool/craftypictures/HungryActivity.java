@@ -30,7 +30,7 @@ public class HungryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String location = mLocationEditText.getText().toString();
                 Log.d(TAG, location);
-                Intent intent = new Intent(HungryActivity.this, SearchRestaurantsActivity.class);
+                Intent intent = new Intent(HungryActivity.this, SearchRestaurantActivity.class);
                 startActivity(intent);
             }
         });
