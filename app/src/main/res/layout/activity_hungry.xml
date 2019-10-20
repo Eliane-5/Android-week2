@@ -5,7 +5,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/nameEditText"
+        android:id="@+id/locationEditText"
         android:layout_above="@+id/startButton"
         android:gravity="center"
         android:background="@color/white"
@@ -25,4 +25,5 @@
         android:background="@drawable/rounded_corners"
         android:textSize="30sp"
         android:textStyle="bold" />
+
 </RelativeLayout>
