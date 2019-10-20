@@ -1,6 +1,8 @@
 package com.moringaschool.craftypictures;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,28 +25,20 @@ import retrofit2.Response;
 public class SearchGalleryActivity extends AppCompatActivity {
     private static final String TAG = SearchGalleryActivity.class.getSimpleName();
 
-    @BindView(R.id.locationTextView) TextView mLocationTextView;
-    @BindView(R.id.listView) ListView mListView;
+    @BindView(R.id.recyclerView) RecyclerView mRecyclerView;
     @BindView(R.id.errorTextView) TextView mErrorTextView;
     @BindView(R.id.progressBar) ProgressBar mProgressBar;
+    private GalleriesArrayAdapter mAdapter;
 
+    public List<Business> galleries;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_gallery);
         ButterKnife.bind(this);
 
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String gallery = ((TextView)view).getText().toString();
-                Toast.makeText(SearchGalleryActivity.this, gallery, Toast.LENGTH_LONG).show();
-            }
-        });
-
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
-        mLocationTextView.setText("Here are all the art galleries near: " + location);
 
         YelpApi client = YelpClient.getClient();
 
@@ -56,21 +50,12 @@ public class SearchGalleryActivity extends AppCompatActivity {
                 hideProgressBar();
 
                 if (response.isSuccessful()) {
-                    List<Business> galleriesList = response.body().getBusinesses();
-                    String[] galleries = new String[galleriesList.size()];
-                    String[] categories = new String[galleriesList.size()];
-
-                    for (int i = 0; i < galleries.length; i++){
-                        galleries[i] = galleriesList.get(i).getName();
-                    }
-
-                    for (int i = 0; i < categories.length; i++) {
-                        Category category = galleriesList.get(i).getCategories().get(0);
-                        categories[i] = category.getTitle();
-                    }
-
-                    ArrayAdapter adapter = new GalleriesArrayAdapter(SearchGalleryActivity.this, android.R.layout.simple_list_item_1, galleries, categories);
-                    mListView.setAdapter(adapter);
+                    galleries = response.body().getBusinesses();
+                    mAdapter = new GalleriesArrayAdapter(SearchGalleryActivity.this, galleries);
+                    mRecyclerView.setAdapter(mAdapter);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(SearchGalleryActivity.this);
+                    mRecyclerView.setLayoutManager(layoutManager);
+                    mRecyclerView.setHasFixedSize(true);
 
                     showGalleries();
                 } else {
@@ -98,8 +83,7 @@ public class SearchGalleryActivity extends AppCompatActivity {
     }
 
     private void showGalleries() {
-        mListView.setVisibility(View.VISIBLE);
-        mLocationTextView.setVisibility(View.VISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
     }
 
     private void hideProgressBar() {
