@@ -16,7 +16,7 @@ public class ChoiceActivity extends AppCompatActivity {
     @BindView(R.id.userNameTextView) TextView mUserNameTextView;
     @BindView(R.id.blackAndWhite) Button mblackAndWhiteButton;
     @BindView(R.id.colorful) Button mColorfulButton;
-
+    @BindView(R.id.hungry) Button mHungryButon;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,12 @@ public class ChoiceActivity extends AppCompatActivity {
                 Toast.makeText(ChoiceActivity.this, "Colorful pictures it is!", Toast.LENGTH_LONG).show();
             }
         });
-
+        mHungryButon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChoiceActivity.this, HungryActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
