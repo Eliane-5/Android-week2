@@ -14,9 +14,9 @@ import butterknife.ButterKnife;
 
 public class ChoiceActivity extends AppCompatActivity {
     @BindView(R.id.userNameTextView) TextView mUserNameTextView;
-    @BindView(R.id.blackAndWhite) Button mblackAndWhiteButton;
+    @BindView(R.id.blackAndWhite) Button mBlackAndWhiteButton;
     @BindView(R.id.colorful) Button mColorfulButton;
-    @BindView(R.id.hungry) Button mHungryButon;
+    @BindView(R.id.exhibition) Button mExhibitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class ChoiceActivity extends AppCompatActivity {
         String userName = intent.getStringExtra("userName");
         mUserNameTextView.setText("Hello "+  userName +" have fun!");
 
-        mblackAndWhiteButton.setOnClickListener(new View.OnClickListener() {
+        mBlackAndWhiteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ChoiceActivity.this, BlackAndWhiteActivity.class);
@@ -45,12 +45,12 @@ public class ChoiceActivity extends AppCompatActivity {
                 Toast.makeText(ChoiceActivity.this, "Colorful pictures it is!", Toast.LENGTH_LONG).show();
             }
         });
-        mHungryButon.setOnClickListener(new View.OnClickListener() {
+        mExhibitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ChoiceActivity.this, HungryActivity.class);
+                Intent intent = new Intent(ChoiceActivity.this, LocationActivity.class);
                 startActivity(intent);
-                Toast.makeText(ChoiceActivity.this, "prepare to have a treat!", Toast.LENGTH_LONG).show();
+                Toast.makeText(ChoiceActivity.this, "Enter your location to know which exhibition places are in your area!", Toast.LENGTH_LONG).show();
             }
         });
     }

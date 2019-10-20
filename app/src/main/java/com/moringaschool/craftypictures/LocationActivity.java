@@ -12,25 +12,25 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HungryActivity extends AppCompatActivity {
-    public static final String TAG = HungryActivity.class.getSimpleName();
+public class LocationActivity extends AppCompatActivity {
+    public static final String TAG = LocationActivity.class.getSimpleName();
     @BindView(R.id.locationEditText) EditText mLocationEditText;
-    @BindView(R.id.submitHungryButton) Button mSubmitHungryButton;
+    @BindView(R.id.submitLocationButton) Button mSubmitLocationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_hungry);
+        setContentView(R.layout.activity_location);
         ButterKnife.bind(this);
 
         Intent intent = getIntent();
 
-        mSubmitHungryButton.setOnClickListener(new View.OnClickListener() {
+        mSubmitLocationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String location = mLocationEditText.getText().toString();
                 Log.d(TAG, location);
-                Intent intent = new Intent(HungryActivity.this, SearchRestaurantActivity.class);
+                Intent intent = new Intent(LocationActivity.this, SearchGalleryActivity.class);
                 intent.putExtra("location",location);
                 startActivity(intent);
             }

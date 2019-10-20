@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,8 +20,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SearchRestaurantActivity extends AppCompatActivity {
-    private static final String TAG = SearchRestaurantActivity.class.getSimpleName();
+public class SearchGalleryActivity extends AppCompatActivity {
+    private static final String TAG = SearchGalleryActivity.class.getSimpleName();
 
     @BindView(R.id.locationTextView) TextView mLocationTextView;
     @BindView(R.id.listView) ListView mListView;
@@ -32,56 +31,55 @@ public class SearchRestaurantActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_search_restaurant);
+        setContentView(R.layout.activity_search_gallery);
         ButterKnife.bind(this);
 
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String restaurant = ((TextView)view).getText().toString();
-                Toast.makeText(SearchRestaurantActivity.this, restaurant, Toast.LENGTH_LONG).show();
+                String gallery = ((TextView)view).getText().toString();
+                Toast.makeText(SearchGalleryActivity.this, gallery, Toast.LENGTH_LONG).show();
             }
         });
 
         Intent intent = getIntent();
         String location = intent.getStringExtra("location");
-        mLocationTextView.setText("Here are all the restaurants near: " + location);
+        mLocationTextView.setText("Here are all the art galleries near: " + location);
 
         YelpApi client = YelpClient.getClient();
 
-        Call<YelpRestaurantsSearchResponse> call = client.getRestaurants(location, "restaurants");
+        Call<YelpGalleriesSearchResponse> call = client.getGalleries(location, "art gallery");
 
-        call.enqueue(new Callback<YelpRestaurantsSearchResponse>() {
+        call.enqueue(new Callback<YelpGalleriesSearchResponse>() {
             @Override
-            public void onResponse(Call<YelpRestaurantsSearchResponse> call, Response<YelpRestaurantsSearchResponse> response) {
+            public void onResponse(Call<YelpGalleriesSearchResponse> call, Response<YelpGalleriesSearchResponse> response) {
                 hideProgressBar();
 
                 if (response.isSuccessful()) {
-                    List<Business> restaurantsList = response.body().getBusinesses();
-                    String[] restaurants = new String[restaurantsList.size()];
-                    String[] categories = new String[restaurantsList.size()];
+                    List<Business> galleriesList = response.body().getBusinesses();
+                    String[] galleries = new String[galleriesList.size()];
+                    String[] categories = new String[galleriesList.size()];
 
-                    for (int i = 0; i < restaurants.length; i++){
-                        restaurants[i] = restaurantsList.get(i).getName();
+                    for (int i = 0; i < galleries.length; i++){
+                        galleries[i] = galleriesList.get(i).getName();
                     }
 
                     for (int i = 0; i < categories.length; i++) {
-                        Category category = restaurantsList.get(i).getCategories().get(0);
+                        Category category = galleriesList.get(i).getCategories().get(0);
                         categories[i] = category.getTitle();
                     }
 
-                    ArrayAdapter adapter
-                            = new RestaurantsArrayAdapter(SearchRestaurantActivity.this, android.R.layout.simple_list_item_1, restaurants, categories);
+                    ArrayAdapter adapter = new GalleriesArrayAdapter(SearchGalleryActivity.this, android.R.layout.simple_list_item_1, galleries, categories);
                     mListView.setAdapter(adapter);
 
-                    showRestaurants();
+                    showGalleries();
                 } else {
                     showUnsuccessfulMessage();
                 }
             }
 
             @Override
-            public void onFailure(Call<YelpRestaurantsSearchResponse> call, Throwable t) {
+            public void onFailure(Call<YelpGalleriesSearchResponse> call, Throwable t) {
                 hideProgressBar();
                 showFailureMessage();
             }
@@ -99,7 +97,7 @@ public class SearchRestaurantActivity extends AppCompatActivity {
         mErrorTextView.setVisibility(View.VISIBLE);
     }
 
-    private void showRestaurants() {
+    private void showGalleries() {
         mListView.setVisibility(View.VISIBLE);
         mLocationTextView.setVisibility(View.VISIBLE);
     }

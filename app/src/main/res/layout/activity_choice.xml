@@ -45,10 +45,10 @@
         android:background="@drawable/gradient_button"/>
 
     <Button
-        android:id="@+id/hungry"
+        android:id="@+id/exhibition"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="click here if you are hungry"
+        android:text="want to make a live exhibition?"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="380dp"
         android:padding="15dp"

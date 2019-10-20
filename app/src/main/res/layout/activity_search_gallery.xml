@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Restaurants near "
+        android:text="art galleries near "
         android:visibility="gone" />
 
     <TextView
