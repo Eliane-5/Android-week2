@@ -12,4 +12,17 @@
         android:padding="7dp"
         android:hint="Please enter your location here"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/submitHungryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="SUBMIT"
+        android:padding="10dp"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/rounded_corners"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 </RelativeLayout>
