@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:layout_width="130dp"
@@ -24,18 +26,8 @@
             android:id="@+id/galleryNameTextView"
             android:textSize="20dp"
             android:textStyle="bold"
-            android:text="Restaurant Name"
+            android:text="Gallery Name"
             android:textColor="@color/colorPrimary"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Category"
-            android:id="@+id/categoryTextView"
-            android:layout_below="@+id/galleryNameTextView"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:textStyle="italic"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -44,11 +36,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rating"
-                android:id="@+id/ratingTextView"
+                android:text="Category"
+                android:id="@+id/categoryTextView"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
                 android:layout_alignParentRight="true"
-                android:textColor="@color/colorAccent"/>
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>

@@ -50,7 +50,6 @@ public class GalleriesArrayAdapter extends RecyclerView.Adapter<GalleriesArrayAd
         @BindView(R.id.galleryImageView) ImageView mGalleryImageView;
         @BindView(R.id.galleryNameTextView) TextView mNameTextView;
         @BindView(R.id.categoryTextView) TextView mCategoryTextView;
-        @BindView(R.id.ratingTextView) TextView mRatingTextView;
         private Context mContext;
 
         public GalleryViewHolder(View itemView) {
@@ -71,7 +70,6 @@ public class GalleriesArrayAdapter extends RecyclerView.Adapter<GalleriesArrayAd
             Picasso.get().load(gallery.getImageUrl()).into(mGalleryImageView);
             mNameTextView.setText(gallery.getName());
             mCategoryTextView.setText(gallery.getCategories().get(0).getTitle());
-            mRatingTextView.setText("Rating: " + gallery.getRating() + "/5");
         }
     }
 }

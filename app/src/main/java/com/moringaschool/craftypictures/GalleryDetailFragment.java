@@ -1,6 +1,8 @@
 package com.moringaschool.craftypictures;
 
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -19,33 +21,32 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class GalleryDetailFragment extends Fragment {
+public class GalleryDetailFragment extends Fragment implements View.OnClickListener {
     @BindView(R.id.galleryImageView) ImageView mImageLabel;
     @BindView(R.id.galleryNameTextView) TextView mNameLabel;
     @BindView(R.id.categoryTextView) TextView mCategoriesLabel;
     @BindView(R.id.websiteTextView) TextView mWebsiteLabel;
     @BindView(R.id.phoneTextView) TextView mPhoneLabel;
     @BindView(R.id.addressTextView) TextView mAddressLabel;
-    @BindView(R.id.saveGalleryButton) TextView mSaveRestaurantButton;
 
-    private Business mRestaurant;
+    private Business mGallery;
 
     public GalleryDetailFragment() {
         // Required empty public constructor
     }
 
-    public static GalleryDetailFragment newInstance(Business restaurant) {
-        GalleryDetailFragment restaurantDetailFragment = new GalleryDetailFragment();
+    public static GalleryDetailFragment newInstance(Business gallery) {
+        GalleryDetailFragment galleryDetailFragment = new GalleryDetailFragment();
         Bundle args = new Bundle();
-        args.putParcelable("restaurant", Parcels.wrap(restaurant));
-        restaurantDetailFragment.setArguments(args);
-        return restaurantDetailFragment;
+        args.putParcelable("gallery", Parcels.wrap(gallery));
+        galleryDetailFragment.setArguments(args);
+        return galleryDetailFragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mRestaurant = Parcels.unwrap(getArguments().getParcelable("restaurant"));
+        mGallery = Parcels.unwrap(getArguments().getParcelable("gallery"));
     }
 
     @Override
@@ -53,18 +54,40 @@ public class GalleryDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_gallery_detail, container, false);
         ButterKnife.bind(this, view);
 
-        Picasso.get().load(mRestaurant.getImageUrl()).into(mImageLabel);
+        Picasso.get().load(mGallery.getImageUrl()).into(mImageLabel);
 
         List<String> categories = new ArrayList<>();
-        for (Category category: mRestaurant.getCategories()) {
+        for (Category category: mGallery.getCategories()) {
             categories.add(category.getTitle());
         }
 
-        mNameLabel.setText(mRestaurant.getName());
+        mNameLabel.setText(mGallery.getName());
         mCategoriesLabel.setText(android.text.TextUtils.join(", ", categories));
-        mPhoneLabel.setText(mRestaurant.getPhone());
-        mAddressLabel.setText(mRestaurant.getLocation().toString());
-
+        mPhoneLabel.setText(mGallery.getPhone());
+        mAddressLabel.setText(mGallery.getLocation().toString());
+        mWebsiteLabel.setOnClickListener(this);
+        mPhoneLabel.setOnClickListener(this);
+        mAddressLabel.setOnClickListener(this);
         return view;
+    }
+    @Override
+    public void onClick(View v) {
+        if (v == mWebsiteLabel) {
+            Intent webIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse(mGallery.getUrl()));
+            startActivity(webIntent);
+        }
+        if (v == mPhoneLabel) {
+            Intent phoneIntent = new Intent(Intent.ACTION_DIAL,
+                    Uri.parse("tel:" + mGallery.getPhone()));
+            startActivity(phoneIntent);
+        }
+        if (v == mAddressLabel) {
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("geo:" + mGallery.getCoordinates().getLatitude()
+                            + "," + mGallery.getCoordinates().getLongitude()
+                            + "?q=(" + mGallery.getName() + ")"));
+            startActivity(mapIntent);
+        }
     }
 }
