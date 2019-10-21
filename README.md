@@ -1,4 +1,4 @@
-# Crafty Pictures version 2
+# Crafty Pictures **(version 2)**
 
 #### Crafty pictures is a mobile application in development that will allow it's user to either post their pictures artframes on this platform and be able to sell them or buy other items via that same platform.
 
